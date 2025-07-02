@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, field_validator
 from datetime import date
+import re
 
 
 class ContactModel(BaseModel):
@@ -11,7 +12,6 @@ class ContactModel(BaseModel):
 
     @field_validator("phone_number")
     def validate_phone_number(cls, v):
-        import re
 
         pattern = r"^\+\d{10,15}$"
         if not re.match(pattern, v):
@@ -32,7 +32,3 @@ class Contact(ContactModel):
 
     class Config:
         from_attributes = True
-
-
-class DeleteResponse(BaseModel):
-    message: str
